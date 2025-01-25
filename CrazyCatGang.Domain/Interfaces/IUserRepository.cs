@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CrazyCatGang.Domain.DTO;
 using CrazyCatGang.Domain.Models;
 
 namespace CrazyCatGang.Domain.Interfaces
@@ -13,6 +14,13 @@ namespace CrazyCatGang.Domain.Interfaces
 
         Task<User> GetUserById(int id);
 
-        Task<User> GetUserByPassword(string password);
+        Task<User> GetUserAccount(string email, string password);
+
+        Task<UserPostAndPutDTO> CreateUser(UserPostAndPutDTO user);
+
+        Task<UserPostAndPutDTO> UpdateUser(int userID, UserPostAndPutDTO user);
+
+        Task<User> DeleteUser(int id);
+
     }
 }

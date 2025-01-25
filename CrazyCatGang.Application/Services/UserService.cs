@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CrazyCatGang.Domain.DTO;
 using CrazyCatGang.Domain.Interfaces;
 using CrazyCatGang.Domain.Models;
 
@@ -27,7 +28,7 @@ namespace CrazyCatGang.Application.Services
 
                 if(user == null)
                 {
-                    response.Mensagem = "User not found";
+                    response.Mensagem = "User is Null";
                     response.status = false;
                     response.StatusCode = 404;
                     return response;
@@ -65,6 +66,14 @@ namespace CrazyCatGang.Application.Services
                 
                 var users = await _userRepository.GetUsers();
 
+                if (users == null)
+                {
+                    response.Mensagem = "User is Null";
+                    response.status = false;
+                    response.StatusCode = 404;
+                    return response;
+                }
+
                 response.Data = users;
 
                 response.Mensagem = "Users found";
@@ -89,17 +98,17 @@ namespace CrazyCatGang.Application.Services
 
         }
 
-        public async Task<CrazyCatGangResponse<User>> GetUserByPassword(string password)
+        public async Task<CrazyCatGangResponse<User>> GetUserAccount(string email, string password)
         {
             CrazyCatGangResponse<User> response = new CrazyCatGangResponse<User>();
 
             try
             {
-                var user = await _userRepository.GetUserByPassword(password);
+                var user = await _userRepository.GetUserAccount(email, password);
 
                 if (user == null)
                 {
-                    response.Mensagem = "User not found";
+                    response.Mensagem = "User is Null";
                     response.status = false;
                     response.StatusCode = 404;
                     return response;
@@ -120,6 +129,111 @@ namespace CrazyCatGang.Application.Services
                 response.StatusCode = 500;
                 return response;
 
+            }
+        }
+
+        public async Task<CrazyCatGangResponse<UserPostAndPutDTO>> CreateUser(UserPostAndPutDTO user)
+        {
+            CrazyCatGangResponse<UserPostAndPutDTO> response = new CrazyCatGangResponse<UserPostAndPutDTO>();
+
+            try
+            {
+                var userCreated = await _userRepository.CreateUser(user);
+
+                if (userCreated == null)
+                {
+                    response.Mensagem = "User is Null";
+                    response.status = false;
+                    response.StatusCode = 404;
+                    return response;
+                }
+
+                response.Data = user;
+                response.Mensagem = "User Created";
+                response.status = true;
+                response.StatusCode = 200;
+
+                return response;
+
+            }
+            catch
+            {
+                response.Mensagem = "Error to Create User";
+                response.status = false;
+                response.StatusCode = 500;
+                return response;
+            }
+        }
+
+        public async Task<CrazyCatGangResponse<UserPostAndPutDTO>> UpdateUser(int userID, UserPostAndPutDTO user)
+        {
+            CrazyCatGangResponse<UserPostAndPutDTO> response = new CrazyCatGangResponse<UserPostAndPutDTO>();
+
+            try
+            {
+                var userEdited = await _userRepository.UpdateUser(userID, user);
+
+                if (userEdited == null)
+                {
+                    response.Mensagem = "User is Null";
+                    response.status = false;
+                    response.StatusCode = 404;
+                    return response;
+                }
+
+                response.Data = user;
+                response.Mensagem = "User Edited";
+                response.status = true;
+                response.StatusCode = 200;
+
+                return response;
+
+            }
+            catch
+            {
+                response.Mensagem = "Error to Edit User";
+                response.status = false;
+                response.StatusCode = 500;
+                return response;
+            }
+        }
+
+        public async Task<CrazyCatGangResponse<User>> DeleteUser(int id)
+        {
+            CrazyCatGangResponse<User> response = new CrazyCatGangResponse<User>();
+
+            try
+            {
+                var user = await _userRepository.DeleteUser(id);
+
+                if (user == null)
+                {
+                    response.Mensagem = "User is Null";
+                    response.status = false;
+                    response.StatusCode = 404;
+                    return response;
+                }
+
+                response.Data = user;
+
+                response.Mensagem = "User Deleted";
+
+                response.status = true;
+
+                response.StatusCode = 200;
+
+                return response;
+
+            }
+            catch
+            {
+                response.Mensagem = "Error to Delete User";
+
+                response.status = false;
+
+                response.StatusCode = 500;
+
+                return response;
             }
         }
     }
