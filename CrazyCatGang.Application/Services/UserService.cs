@@ -60,7 +60,7 @@ namespace CrazyCatGang.Application.Services
 
         }
 
-        public async Task<CrazyCatGangResponse<List<Domain.Models.User>>> GetUsers()
+        public async Task<CrazyCatGangResponse<List<User>>> GetUsers()
         {
             CrazyCatGangResponse<List<User>> response = new CrazyCatGangResponse<List<User>>();
 
