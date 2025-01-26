@@ -20,42 +20,129 @@ namespace CrazyCatGang.API.Controllers
         public async Task<ActionResult<CrazyCatGangResponse<List<User>>>> GetUsers()
         {
             var users = await _userService.GetUsers();
-            return Ok(users);
+
+            if (users.StatusCode == 200)
+            {
+                return Ok(users);
+            }
+            else if (users.StatusCode == 404)
+            {
+                return NotFound(users);
+            }
+            else if (users.StatusCode == 500)
+            {
+                return StatusCode(500, users);
+            }
+
+            return BadRequest(users);
+
         }
 
         [HttpGet("GetUserById/{userID}")]
         public async Task<ActionResult<CrazyCatGangResponse<User>>> GetUserById(int userID)
         {
             var user = await _userService.GetUserById(userID);
-            return Ok(user);
+
+            if (user.StatusCode == 200)
+            {
+                return Ok(user);
+            }
+            else if (user.StatusCode == 404)
+            {
+                return NotFound(user);
+            }
+            else if (user.StatusCode == 500)
+            {
+                return StatusCode(500, user);
+            }
+
+            return BadRequest(user);
+
         }
 
         [HttpGet("GetUserAccount")]
         public async Task<ActionResult<CrazyCatGangResponse<User>>> GetUserByPassword(string userEmail, string userPassword)
         {
             var user = await _userService.GetUserAccount(userEmail, userPassword);
-            return Ok(user);
+
+            if (user.StatusCode == 200)
+            {
+                return Ok(user);
+            }
+            else if (user.StatusCode == 404)
+            {
+                return NotFound(user);
+            }
+            else if (user.StatusCode == 500)
+            {
+                return StatusCode(500, user);
+            }
+
+            return BadRequest(user);
+
         }
 
         [HttpPost("CreateUser")]
         public async Task<ActionResult<CrazyCatGangResponse<User>>> CreateUser(UserPostAndPutDTO user)
         {
             var createdUser = await _userService.CreateUser(user);
-            return Ok(createdUser);
+
+            if (createdUser.StatusCode == 200)
+            {
+                return Ok(createdUser);
+            }
+            else if (createdUser.StatusCode == 404)
+            {
+                return NotFound(createdUser);
+            }
+            else if (createdUser.StatusCode == 500)
+            {
+                return StatusCode(500, createdUser);
+            }
+
+            return BadRequest(createdUser);
         }
 
         [HttpPut("UpdateUser/{userID}")]
         public async Task<ActionResult<CrazyCatGangResponse<User>>> UpdateUser(int userID, UserPostAndPutDTO user)
         {
-            var updatedUser = await _userService.UpdateUser( userID, user);
-            return Ok(updatedUser);
+            var updatedUser = await _userService.UpdateUser(userID, user);
+
+            if (updatedUser.StatusCode == 200)
+            {
+                return Ok(updatedUser);
+            }
+            else if (updatedUser.StatusCode == 404)
+            {
+                return NotFound(updatedUser);
+            }
+            else if (updatedUser.StatusCode == 500)
+            {
+                return StatusCode(500, updatedUser);
+            }
+
+            return BadRequest(updatedUser);
         }
 
         [HttpDelete("DeleteUser/{userID}")]
         public async Task<ActionResult<CrazyCatGangResponse<User>>> DeleteUser(int userID)
         {
             var deletedUser = await _userService.DeleteUser(userID);
-            return Ok(deletedUser);
+
+            if (deletedUser.StatusCode == 200)
+            {
+                return Ok(deletedUser);
+            }
+            else if (deletedUser.StatusCode == 404)
+            {
+                return NotFound(deletedUser);
+            }
+            else if (deletedUser.StatusCode == 500)
+            {
+                return StatusCode(500, deletedUser);
+            }
+
+            return BadRequest(deletedUser);
         }
 
     }
