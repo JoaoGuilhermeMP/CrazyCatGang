@@ -11,6 +11,8 @@ namespace CrazyCatGang.Infra
         public DbSet<Purchase> Purchases { get; set; }
         public DbSet<Contacts> Contacts { get; set; }
 
+        public DbSet<Item> Items { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
